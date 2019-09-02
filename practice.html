@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Html Event</title>
+<style>
+.highline{
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    background-color: beige;
+}
+.normal{
+    font-weight: normal;
+}
+</style>
+</head>
+<body>
+<div style="padding-bottom: 15px;">
+    <div style="padding-bottom: 1px;">
+        <span id="pageTab">Page</span>
+        <span id="imageTab">Image</span>
+    </div>
+    <input type="text" />
+    <input id="searchBtn" type="submit" value="Search" ></input>
+</div>
+<div id="addBlock">
+    <input id="add" type="submit" />
+</div>
+</body>
+</html>
+<script>
+    // function clickPage(){
+    //     let searchObj = getObj("searchBtn");
+    //     searchObj.value="Page Search";
+    // }
+    function getObj(id){
+        return document.getElementById(id);
+    }
+    let searchObj = getObj("searchBtn");
+    let pageObj = getObj("pageTab");
+    let imageTabObj = getObj("imageTab");
+    pageObj.addEventListener("click", function(e){
+        
+        searchObj.value="Page Search";
+        pageObj.className="highline"
+        imageTabObj.className="normal";
+    });
+    imageTabObj.addEventListener("click", function(e){
+        searchObj.value = "Image Search";
+        pageObj.className="normal"
+        imageTabObj.className="highline";
+    });
+    
+    let addBlock = document.getElementById("addBlock");
+    let addBtn = document.getElementById("add");
+    addBtn.addEventListener("click", function(e){
+        console.log("add click");
+        let newLinkObj = document.createElement("a");
+        newLinkObj.innerHTML="Google";
+        newLinkObj.href="https://www.google.com/";
+        addBlock.appendChild(newLinkObj);
+    });
+</script>

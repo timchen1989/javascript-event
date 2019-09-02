@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Html Event</title>
+<style>
+</style>
+</head>
+<body style="margin:0px; background: black; ">
+<div  style="border-bottom: 1px solid white; padding-bottom:20px;
+    display: flex; justify-content: center;">
+    <input id="addTicketBtn" style="margin:30px 0px; border:1px solid gold; width:80px; height: 30px; 
+    margin-right: 30px;" type="submit" value="Add Ticket" />
+
+    <div id="addTicketBlock" style="width:290px; margin-right: 6px;"></div>
+
+    <div id="ticketNumber" style="display:none; margin-top:30px; color:white; font-size: 30px;">
+        
+    </div>
+</div>
+    
+</div>
+<div style="padding-top:30px; display: flex; justify-content: center;">
+    <div style=" border:1px solid white; width:600px; height:200px; border-radius: 7px;
+    margin-bottom: 200px;">
+        x
+    </div>
+    <div>
+        <table style=" border:1px solid white;"  rules="all">
+             <tr style="padding:0px; margin: 0px;">
+                <td id="td1" style="width: 57px; height: 57px;"><img id="1" draggable="true" style="display: none;" src="image/9.png"/></td>
+                <td id="td2" style="width: 57px; height: 57px;"><img id="2" draggable="true" style="display: none;" src="image/8.png"/></td>
+                <td id="td3" style="width: 57px; height: 57px;"><img id="3" draggable="true" style="display: none;" src="image/7.png" /></td>
+            </tr>
+            <tr>
+                <td id="td4" style="width: 57px; height: 57px;"><img id="4" style="display: none;" src="image/6.png" /></td>
+                <td id="td5" style="width: 57px; height: 57px;"><img id="5" style="display: none;"src="image/5.png" /></td>
+                <td id="td6" style="width: 57px; height: 57px;"><img id="6" style="display: none;" src="image/4.png" /></td>
+            </tr>
+            <tr>
+                <td id="td7" style="width: 57px; height: 57px;"><img id="7" style="display: none;" src="image/3.png" /></td>
+                <td id="td8" style="width: 57px; height: 57px;"><img id="8" style="display: none;" src="image/2.png" /></td>
+                <td id="td9" style="width: 57px; height: 57px;"><img id="9" style="display: none;" src="image/1.png" /></td>
+            </tr>           
+        </table>
+    </div>
+</div>
+<div>
+    <table id="imageTable" style=" border:1px solid white;"  rules="all">
+                 
+   </table>
+</div>
+</body>
+</html>
+<script>
+function registEvent(eventOjbect, imageId){
+    eventOjbect.addEventListener("click", function(e){
+        document.getElementById(imageId).style.display="block";
+    });
+
+}
+    // aaa(document.getElementById("td1"), 1);
+    // aaa(document.getElementById("td2"), 2);
+    // aaa(document.getElementById("td3"), 3);
+    // aaa(document.getElementById("td4"), 4);
+    // aaa(document.getElementById("td5"), 5);
+    // aaa(document.getElementById("td6"), 6);
+    // aaa(document.getElementById("td7"), 7);
+    // aaa(document.getElementById("td8"), 8);
+    // aaa(document.getElementById("td9"), 9);
+
+    // registEvent(document.getElementById("1"));
+    // registEvent(document.getElementById("2"));
+    // registEvent(document.getElementById("3"));
+    // registEvent(document.getElementById("4"));
+    
+    // aaa(document.getElementById("a"));
+    // aaa(document.getElementById("b"));
+    // aaa(document.getElementById("c"));
+    // aaa(document.getElementById("d"));
+    // aaa(document.getElementById("e"));
+    // aaa(document.getElementById("f"));
+    let mouseDownFlag=false;
+    let mouseMoveFlag=false;
+    function getItemById(itemId){
+        return document.getElementById(itemId);
+    }
+    
+    function registImageCanDrop(tdItem, imageItem){
+        tdItem.addEventListener("mousedown", function(e){
+            mouseDownFlag=true;
+            imageItem.style.display="block";
+        });
+        imageItem.addEventListener("dragstart", function(e){
+            mouseMoveFlag=true;
+            e.preventDefault();
+        });
+        tdItem.addEventListener("mousemove", function(e){
+            draw2(mouseDownFlag, mouseMoveFlag, imageItem);
+        });
+    }
+    registImageCanDrop(getItemById("td1"), getItemById("1"));
+    registImageCanDrop(getItemById("td2"), getItemById("2"));
+    registImageCanDrop(getItemById("td3"), getItemById("3"));
+
+    
+    function draw2(mouseDownFlag, mouseMoveFlag, obj){
+        if(mouseDownFlag && mouseMoveFlag){
+            console.log(obj);
+            obj.style.display="block";
+        }
+    }
+    // td2.addEventListener("mouseup",function(e){
+    //     mouseDownFlag=false;
+    // });
+    // img2.addEventListener("drop", function(e){
+    //     mouseMoveFlag=false;
+    // });
+    // td2.addEventListener("mousedown", function(e){
+    //     mouseDownFlag=true;
+    //     img2.style.display="block";    
+    // });
+
+    // td2.addEventListener("mousemove", function(e){
+    //     draw2(mouseDownFlag, mouseMoveFlag, img2);
+    // });
+    // img2.addEventListener("dragstart", function(e){
+    //     mouseMoveFlag=true;
+    //     draw2(mouseDownFlag, mouseMoveFlag, img2);
+    //     e.preventDefault();
+    // });
+    
+
+
+    
+    let image1 = document.getElementById("1");
+//     function move(){
+//         console.log("mouse move>>>>>>");
+//         image1.style.display="block";
+//    }
+
+    function aaa(obj, imageId){
+        // obj.addEventListener("mousedown", function(e){
+        //     document.addEventListener("mousemove", move);
+        // });
+        
+
+        obj.addEventListener("mousedown", function(e){
+            mouseDownFlag=true;
+            draw(obj, imageId, mouseDownFlag, mouseMoveFlag);
+        });
+        obj.addEventListener("mousemove", function(e){
+            mouseMoveFlag=true;
+            draw(obj, imageId, mouseDownFlag, mouseMoveFlag);
+        });
+        obj.addEventListener("mouseup", function(){
+            mouseDownFlag=false;
+        });
+        obj.addEventListener("mouseout", function(e){
+            mouseMoveFlag=false;
+        });
+    }
+    function draw(obj, imageId, mouseDownFlag, mouseMoveFlag){
+        if(mouseDownFlag && mouseMoveFlag){
+            document.getElementById(imageId).style.display="block";
+            //obj.style.backgroundColor="white"; test
+        }
+    }
+    
+    // let oneBlockObj = document.getElementById("1");
+    // let number = 0;
+    // let randomNumber = 0;
+    // let showTicketImage=true;
+    // let showTicketNumber=false;
+    // let addTicketObj = document.getElementById("addTicketBtn");
+   
+    // let addTicketBlock = document.getElementById("addTicketBlock");
+    // addTicketObj.addEventListener("click", function(e){
+    //     number++;
+    //     randomNumber = (Math.floor(Math.random()*number)+1);
+    //     if(number>12){
+    //         showTicketImage=false;
+    //         showTicketNumber=true;
+    //     }
+    //     if(showTicketImage){
+    //         let ticketObj = document.createElement("img");
+    //         ticketObj.src="https://skateworldsandiego.com/wp-content/uploads/2018/04/admitone.png?w=640";
+            
+    //         ticketObj.style.paddingLeft="5px";
+    //         ticketObj.style.width="50px";
+    //         ticketObj.style.height="50px";
+    //         addTicketBlock.appendChild(ticketObj);
+    //         if(number%6==0){
+    //             let imgElements = document.getElementsByTagName("img");
+    //             for(let i=0;i< imgElements.length;i++){
+    //                 let imgElement = imgElements[i];
+    //                 imgElement.style.width="40px";
+    //                 imgElement.style.height="40px";
+    //             }
+    //         }
+    //     }
+    //     console.log(number);
+        
+    //     if(showTicketNumber){
+    //         let ticketNumberObj = document.getElementById("ticketNumber");
+    //         ticketNumberObj.style.display="block";
+    //         ticketNumberObj.innerHTML="X "+number;
+    //     }
+    // });
+
+    // oneBlockObj.addEventListener("mousemove", function(e){
+    //     oneBlockObj.style.backgroundColor="white";
+    //     oneBlockObj.innerHTML = randomNumber;
+    // });
+    // oneBlockObj.addEventListener("mouseout", function(e){
+    //     oneBlockObj.style.backgroundColor="black";
+    //     randomNumber = (Math.floor(Math.random()*number)+1);
+    // });
+
+
+//to do
+let imageObj = document.getElementById("imageTable");
+console.log(imageObj);
+let imageNumber=9;
+let trObj = "";
+let tdObj = "";
+let imgObj = "";
+for(let i =0; i<3; i++){
+    trObj = document.createElement("tr");
+    // let tdObj = "";
+    // let imgObj = "";
+    for(let j=0; j<3; j++){
+        console.log(imageNumber);
+        tdObj = document.createElement("td");
+        imgObj = document.createElement("img");
+        imgObj.src="image/"+imageNumber+".png";
+        
+        tdObj.appendChild(imgObj);
+        trObj.append(tdObj);
+
+        // imageObj.appendChild(tdObj);//這樣圖片會只呈現在一行
+        imageNumber--;
+    }
+    imageObj.appendChild(trObj);//這樣前面的圖片會被後面的圖片覆蓋，無法被呈現出來
+}
+// imageObj.appendChild(tdObj);
+    
+</script>
