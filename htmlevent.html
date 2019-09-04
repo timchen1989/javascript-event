@@ -56,6 +56,25 @@
     font-size: 90px;
     padding-top:80px;
 }
+.redPuzzle{
+    background-color: red;
+    position: absolute;
+    width: 50px; 
+    height: 50px;
+    left:500px;
+    top:1200px;
+}
+.bluePuzzle{
+    background-color: blue;
+    width: 50px; 
+    height: 50px;
+    position: absolute;
+    left:600px;
+    top:1200px;
+}
+.puzzle{
+    
+}
 </style>
 </head>
 <body style="margin:0px; background: black; ">
@@ -77,8 +96,19 @@
     </div>
 </div>
 <p style="color:#fff; text-align: center; font-size: 30px;">刮刮樂小遊戲</p>
-<div style="margin-left:475px; margin-bottom: 300px;">
+<div style="display: flex; justify-content: center; margin-bottom: 90px;">
     <table id="imageTable"></table>
+</div>
+<p style="color:#fff; text-align: center; font-size: 30px;">拼圖小遊戲</p>
+<div style="display: flex; justify-content: center; margin-bottom: 300px;">
+    <input id="color" type="color" />
+    <div>
+        <div id="red" class="redPuzzle puzzle" ></div>
+        <div id="blue" class="bluePuzzle puzzle" ></div>
+    </div>
+    <div>
+
+    </div>
 </div>
 </body>
 </html>
@@ -215,7 +245,34 @@ for(let i =0; i<6; i++){
 //註冊image拖拉事件
 imageNumber=42;
 for(;imageNumber>0; imageNumber--){
-    console.log(imageNumber);
     registImageCanDrop(getItemById("td"+imageNumber), getItemById(imageNumber));
 } 
+document.addEventListener("mousemove", function(e){
+    console.log(e.clientX, e.clientY);
+});
+// 3.拼圖小遊戲
+let redObj = document.getElementById("red");
+let blueObj = document.getElementById("blue");
+let pickup = function(){
+            /*如果使用者點擊，document才註冊mousemove事件，這邊需要是"document"來註冊mousemove事件，代表在整個網頁中移動滑鼠都會觸發事件，
+            如果是註冊在box上面那滑鼠不能移超過物件的大小不然就停了，讓框框可以跟著滑鼠動*/
+            document.addEventListener("mousemove", move);
+
+            //方框框拿起來了，如果再點擊，要放下
+            redObj.removeEventListener("mousedown", pickup);
+            redObj.addEventListener("mouseup", putdown);
+        };
+        let move = function(e){
+            // console.log(e.clientX, e.clientY);
+            console.log(document.documentElement.scrollTop)
+            redObj.style.left=(e.clientX-30)+"px";
+            redObj.style.top=(e.clientY-30+document.documentElement.scrollTop)+"px";
+        };
+        let putdown = function(e){
+            document.removeEventListener("mousemove", move);
+            redObj.addEventListener("mousedown", pickup);
+        };
+        //使用者如果點擊，要把方框框拿起來
+        redObj.addEventListener("mousedown", pickup);
+    
 </script>
